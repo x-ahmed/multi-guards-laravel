@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AuthController;
 */
 
 Route::group(['middleware' => 'auth:admin'], function () {
+    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
     Route::view('home', 'home')->name('home');
 });
 

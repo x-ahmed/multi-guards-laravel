@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center flex-shrink-0">
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('admin.home') }}">
                         <x-application-logo class="block w-auto h-10 text-gray-600 fill-current" />
                     </a>
                 </div>
@@ -24,13 +24,13 @@
                 @auth('admin')
                     <div>{{ Auth::guard('admin')->user()->name }}</div>
 
-                    <a href="{{ route('logout') }}"
+                    <a href="{{ route('admin.logout') }}"
                         class="inline-flex items-center h-16 px-1 pt-1 ml-4 border-b-2 border-transparent hover:border-gray-300 focus:text-gray-700 focus:border-gray-300 focus:outline-none"
                         onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
                         @csrf
                     </form>
                 @endauth
