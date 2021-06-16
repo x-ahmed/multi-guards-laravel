@@ -15,10 +15,14 @@ use App\Http\Controllers\Admin\AuthController;
 |
 */
 
+// prevent not authenticated users from visiting "/admin/home" handled inside Authenticate Middleware.
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
     Route::view('home', 'home')->name('home');
 });
 
-Route::post('login', [AuthController::class, 'store'])->name('login');
-Route::view('login', 'auth.login')->name('login');
+// prevent authenticated admin from visiting "/admin/login" and handled inside RedirectIfAuthenticated Middleware.
+Route::group(['middleware' => 'guest:admin'], function () {
+    Route::post('login', [AuthController::class, 'store'])->name('login');
+    Route::view('login', 'auth.login')->name('login');
+});

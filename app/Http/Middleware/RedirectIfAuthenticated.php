@@ -23,7 +23,14 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                // solve authenticated "admin/*" redirection from "/login" to /admin/home if not authenticated as end user.
+                // solve authenticated "admin/*" redirection from "/home" to /admin/home if authenticated as end user.
+                $redirect = match ($guard) {
+                    'admin' => redirect(RouteServiceProvider::ADMIN),
+                    default => redirect(RouteServiceProvider::HOME),
+                };
+                return $redirect;
+                // return redirect(RouteServiceProvider::HOME);
             }
         }
 
